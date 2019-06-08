@@ -1,0 +1,16 @@
+[
+{
+  "modid": "helmetgoblin",
+  "name": "Helmet Goblin",
+  "description": "Adds Helmet Goblins to your world that assault you with dumb comments on your mods.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Lykrast"],
+  "credits": "Vamacher0n for the idea",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

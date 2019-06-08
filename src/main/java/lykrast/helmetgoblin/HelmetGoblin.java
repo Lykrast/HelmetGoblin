@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import lykrast.helmetgoblin.common.CommonProxy;
 import lykrast.helmetgoblin.common.EntityGoblin;
+import lykrast.helmetgoblin.common.HelmetGoblinConfig;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTableList;
@@ -41,7 +42,11 @@ public class HelmetGoblin {
 				.id(loc("helmet_goblin"), 1)
 				.tracker(64, 3, true)
 				.egg(0x97C87B, 0x77673C);
-		builder.spawn(EnumCreatureType.MONSTER, 80, 3, 5, ForgeRegistries.BIOMES.getValuesCollection());
+		if (HelmetGoblinConfig.weight > 0) builder.spawn(EnumCreatureType.MONSTER,
+				HelmetGoblinConfig.weight,
+				HelmetGoblinConfig.minGroup,
+				HelmetGoblinConfig.maxGroup,
+				ForgeRegistries.BIOMES.getValuesCollection());
 		event.getRegistry().register(builder.build());
 		
 		LootTableList.register(EntityGoblin.LOOT);

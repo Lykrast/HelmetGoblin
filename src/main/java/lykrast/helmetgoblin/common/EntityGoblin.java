@@ -4,6 +4,7 @@ import javax.annotation.Nullable;
 
 import lykrast.helmetgoblin.HelmetGoblin;
 import net.minecraft.block.Block;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -52,6 +53,7 @@ public class EntityGoblin extends EntityMob {
 		getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
 		getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23);
 		getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(2);
+		getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(16);
 	}
 
 	@Override
@@ -80,9 +82,21 @@ public class EntityGoblin extends EntityMob {
 		return LOOT;
 	}
 	
+	@Override
+	@Nullable
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData livingdata) {
+        livingdata = super.onInitialSpawn(difficulty, livingdata);
+        
+        setEquipmentBasedOnDifficulty(difficulty);
+        setEnchantmentBasedOnDifficulty(difficulty);
+        
+        return livingdata;
+	}
+	
 
 	@Override
 	protected void setEquipmentBasedOnDifficulty(DifficultyInstance difficulty) {
+		HelmetGoblin.logger.warn("Putting a helmet!");
 		ItemStack itemstack = getItemStackFromSlot(EntityEquipmentSlot.HEAD);
 
 		if (itemstack.isEmpty()) {
@@ -93,8 +107,9 @@ public class EntityGoblin extends EntityMob {
 			if (rand.nextFloat() < 0.095F) ++i;
 			Item item = getArmorByChance(EntityEquipmentSlot.HEAD, i);
 
-			if (item != null)
-				setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(item));
+			if (item != null) setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(item));
+
+			HelmetGoblin.logger.warn("It was a " + item.getTranslationKey());
 		}
 	}
 
